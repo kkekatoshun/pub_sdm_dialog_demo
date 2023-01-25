@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>My App</title>
+  <script>
+    // GitHubPagesの場合、Webサイトをサブディレクトリ（リポジトリ）に配置するため 1 にする。
+    // 更に階層が深くなる場合は、階層数を指定する（その階層に、index.htmlが必要）
+    const SEGMENT_COUNT = 1;
+
+    // https://kkekatoshun.github.io/pub_sdm_dialog_n/switch/E_LB_105 のような URL のうち、
+    // pub_sdm_dialog_n までをベースアドレスとみなし、末尾のパス (switch/E_LB_105)
+    // をエンコードして次のような URL へリダイレクトする。
+    // https://kkekatoshun.github.io/pub_sdm_dialog_n?p=switch/E_LB_105
+    const loc = window.location
+    const origin = loc.origin;  //=> https://kkekatoshun.github.io
+    const path = loc.href.substr(origin.length + 1);  //=> pub_sdm_dialog_n/switch/E_LB_105
+    const segments = path.split('/');  //=> [pub_sdm_dialog_n, switch, E_LB_105]
+    const repo = segments.slice(0, SEGMENT_COUNT).join('/');  //=> pub_sdm_dialog_n
+    const param = segments.slice(SEGMENT_COUNT).join('/');  //=> switch/E_LB_105
+    const url = origin + '/' + repo + '?p=' + encodeURIComponent(param);
+    loc.replace(url);
+  </script>
+</head>
+<body></body>
+</html>
